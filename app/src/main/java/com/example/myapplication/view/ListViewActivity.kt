@@ -127,7 +127,7 @@ fun ListViewBody(){
                     )
                     Text(
                         text = "Cotton Pillow Case", style = TextStyle(
-                            fontWeight = FontWeight.SemiBold, fontSize = 20.sp
+                            fontWeight = FontWeight.SemiBold, fontSize = 12.sp
                         )
                     )
                     Text(text = "Rs.800", color = Color.Gray)
@@ -159,7 +159,7 @@ fun ListViewBody(){
                     )
                     Text(
                         text = "Curve Printerest Mirror", style = TextStyle(
-                            fontWeight = FontWeight.SemiBold, fontSize = 20.sp
+                            fontWeight = FontWeight.SemiBold, fontSize = 12.sp
                         )
                     )
                     Text(text = "Rs.1800", color = Color.Gray)
@@ -195,7 +195,7 @@ fun ListViewBody(){
                     )
                     Text(
                         text = "Italian Carpet", style = TextStyle(
-                            fontWeight = FontWeight.SemiBold, fontSize = 20.sp
+                            fontWeight = FontWeight.SemiBold, fontSize = 12.sp
                         )
                     )
                     Text(text = "Rs.4000", color = Color.Gray)
@@ -227,7 +227,7 @@ fun ListViewBody(){
                     )
                     Text(
                         text = "Cotton Bedsheet Set", style = TextStyle(
-                            fontWeight = FontWeight.SemiBold, fontSize = 20.sp
+                            fontWeight = FontWeight.SemiBold, fontSize = 12.sp
                         )
                     )
                     Text(text = "Rs.2500", color = Color.Gray)
@@ -263,7 +263,7 @@ fun ListViewBody(){
                     )
                     Text(
                         text = "Modern Table Lamp", style = TextStyle(
-                            fontWeight = FontWeight.SemiBold, fontSize = 20.sp
+                            fontWeight = FontWeight.SemiBold, fontSize = 12.sp
                         )
                     )
                     Text(text = "Rs.2765", color = Color.Gray)
@@ -295,7 +295,7 @@ fun ListViewBody(){
                     )
                     Text(
                         text = "Toothbrush Holder", style = TextStyle(
-                            fontWeight = FontWeight.SemiBold, fontSize = 20.sp
+                            fontWeight = FontWeight.SemiBold, fontSize = 12.sp
                         )
                     )
                     Text(text = "Rs.350", color = Color.Gray)
