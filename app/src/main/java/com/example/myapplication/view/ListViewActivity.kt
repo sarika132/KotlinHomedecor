@@ -126,11 +126,11 @@ fun ListViewBody(){
                             .width(60.dp)
                     )
                     Text(
-                        text = "Text", style = TextStyle(
+                        text = "Cotton Pillow Case", style = TextStyle(
                             fontWeight = FontWeight.SemiBold, fontSize = 20.sp
                         )
                     )
-                    Text(text = "@ Click to Enter", color = Color.Gray)
+                    Text(text = "Rs.800", color = Color.Gray)
                 }
 
             }
@@ -158,7 +158,7 @@ fun ListViewBody(){
                             .width(60.dp)
                     )
                     Text(
-                        text = "Addresh", style = TextStyle(
+                        text = "Curve ", style = TextStyle(
                             fontWeight = FontWeight.SemiBold, fontSize = 20.sp
                         )
                     )
