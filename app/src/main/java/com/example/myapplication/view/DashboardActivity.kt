@@ -1,32 +1,19 @@
 package com.example.myapplication.view
+
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material3.Card
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -53,71 +40,95 @@ fun DashboardBody() {
     val repo = remember { ProductRepositoryImpl() }
     val viewModel = remember { ProductViewModel(repo) }
 
-    val products = viewModel.allProducts
-        .observeAsState(initial = emptyList())
-
-    val loading =viewModel.loading.observeAsState(initial = true)
-
+    val decorProducts by viewModel.allProduct.observeAsState(initial = emptyList())
+    val savedProducts by viewModel.newProducts.observeAsState(initial = emptyList())
 
     LaunchedEffect(Unit) {
         viewModel.getAllProduct()
+        viewModel.getNewProducts()
     }
 
     Scaffold(
-        floatingActionButton = {
-            FloatingActionButton(onClick = {
-                val intent = Intent(context, AddProductActivity::class.java)
-                context.startActivity(intent)
-            }) {
-                Icon(Icons.Default.Add, contentDescription = null)
-            }
-        }
-    ) { innerPadding ->
-        LazyColumn (modifier = Modifier.padding(innerPadding)) {
+        topBar = {
+            TopAppBar(title = { Text("Decor Dashboard") })
+        },
+        content = { innerPadding ->
+            LazyColumn(modifier = Modifier.padding(innerPadding)) {
 
-            items (products.value.size) {index->
-                val eachProduct = products.value[index]
-                Card(modifier = Modifier.fillMaxWidth().padding(15.dp)) {
-                    Column(modifier = Modifier.padding(15.dp)) {
-                        Text("${eachProduct?.productName}")
-                        Text("${eachProduct?.productPrice}")
-                        Text("${eachProduct?.productDesc}")
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.End
-                        ) {
-                            IconButton(onClick = {}, colors = IconButtonDefaults.iconButtonColors(
-                                contentColor = Color.Gray
-                            )) {
-                                Icon(Icons.Default.Edit,contentDescription = null)
-                            }
+                item {
+                    Text(
+                        text = "Decor Products",
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
 
-                            IconButton(onClick = {
-                                viewModel.deleteProduct(eachProduct?.productId.toString()){
-                                        success , message ->
-                                    if (success){
-                                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                                    }else{
-                                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-                                    }
+                items(decorProducts) { product ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 15.dp, vertical = 8.dp)
+                    ) {
+                        Column(modifier = Modifier.padding(15.dp)) {
+                            Text(product.name)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text("${product.productCount} Products")
+                                IconButton(onClick = {
+                                    Toast.makeText(context, "Viewing ${product.name}", Toast.LENGTH_SHORT).show()
+                                }) {
+                                    Icon(Icons.Default.ShoppingCart, contentDescription = null)
                                 }
-                            },colors = IconButtonDefaults.iconButtonColors(
-                                contentColor = Color.Red
-                            )) {
-                                Icon(Icons.Default.Delete,contentDescription = null)
+                            }
+                        }
+                    }
+                }
+
+                item {
+                    Text(
+                        text = "Saved Products",
+                        style = MaterialTheme.typography.headlineSmall,
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+
+                items(savedProducts) { product ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 15.dp, vertical = 8.dp)
+                    ) {
+                        Column(modifier = Modifier.padding(15.dp)) {
+                            Text(product.name)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                IconButton(
+                                    onClick = {
+                                        viewModel.removeproductFromNewProducts(product.id) { success, message ->
+                                            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                                        }
+                                    },
+                                    colors = IconButtonDefaults.iconButtonColors(contentColor = Color.Red)
+                                ) {
+                                    Icon(Icons.Default.Favorite, contentDescription = null)
+                                }
                             }
                         }
                     }
                 }
             }
-
-
         }
-    }
+    )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-fun PreDash() {
+fun PreviewDashboard() {
     DashboardBody()
 }

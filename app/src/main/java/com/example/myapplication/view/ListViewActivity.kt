@@ -87,7 +87,7 @@ fun ListViewBody(){
                 .padding(start = 17.dp),
         ) {
             Text(
-                text = "Ghar Sanshar", style =
+                text = "Decor Section", style =
                     TextStyle(
                         fontSize = 40.sp,
                         fontWeight = FontWeight.Bold, color = Color.Cyan,
@@ -95,7 +95,7 @@ fun ListViewBody(){
                     )
             )
             Text(
-                "Simple and easy to use app", style = TextStyle(
+                "Decor you home as you want", style = TextStyle(
                     fontWeight = FontWeight.SemiBold, color = Color.Cyan
                 )
             )
