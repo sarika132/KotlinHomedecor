@@ -7,5 +7,5 @@ data class UserModel(
     var lastName: String = "",
     var gender: String = "",
     var address: String = "",
-    val selectedOptionText: String,
+
 )

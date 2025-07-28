@@ -1,52 +1,24 @@
 package com.example.myapplication.view
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
-import com.example.myapplication.R
 import com.example.myapplication.model.UserModel
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.myapplication.repository.UserRepositoryImp
 import com.example.myapplication.viewmodel.UserViewModel
 
@@ -63,167 +35,138 @@ class RegisterActivity : ComponentActivity() {
 }
 
 @Composable
-fun RegBody(innerPaddingValues: PaddingValues) {
-
-    val repo = remember { UserRepositoryImp ()}
-    val userViewModel = remember {UserViewModel(repo)}
+fun RegBody(innerPadding: PaddingValues) {
+    val repo = remember { UserRepositoryImp() }
+    val userViewModel = remember { UserViewModel(repo) }
 
     val context = LocalContext.current
     val activity = context as? Activity
 
-
-    var firstName by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var lastname by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var expanded by remember { mutableStateOf(false) }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var agreedToTerms by remember { mutableStateOf(false) }
 
-    var selectedOptionText by remember { mutableStateOf("Select Option") }
-
-    val options = listOf("Nepal", "India", "China")
-
-    var textFieldSize by remember { mutableStateOf(Size.Zero) } // to capture textfield size
     Column(
-
         modifier = Modifier
-            .padding(innerPaddingValues).padding(horizontal = 10.dp)
+            .padding(innerPadding)
+            .padding(horizontal = 10.dp)
             .fillMaxSize()
             .background(color = Color.White)
     ) {
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = "Create Your Account Here", color = Color.Black)
+        Spacer(modifier = Modifier.height(20.dp))
 
-        Image(
-            painter = painterResource(id = R.drawable.login),
-            contentDescription = null
+        OutlinedTextField(
+            value = name,
+            onValueChange = { name = it },
+            label = { Text("Full Name") },
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            OutlinedTextField(
-                value = firstName,
-                onValueChange = {
-                    firstName = it
-                },
-                placeholder = {
-                    Text("Firstname")
-                },
-                modifier = Modifier.weight(1f)
-            )
-            Spacer(modifier = Modifier.width(10.dp))
-            OutlinedTextField(
-                value = lastname,
-                onValueChange = {
-                    lastname = it
-                },
-                placeholder = {
-                    Text("Lastname")
-                },
-                modifier = Modifier.weight(1f)
-            )
-        }
+
+        OutlinedTextField(
+            value = phoneNumber,
+            onValueChange = { phoneNumber = it },
+            label = { Text("Phone Number") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
         Spacer(modifier = Modifier.height(20.dp))
+
         OutlinedTextField(
             value = email,
-            onValueChange = {
-                email = it
-            },
-            placeholder = {
-                Text("abc@gmail.com")
-            },
+            onValueChange = { email = it },
+            label = { Text("Email") },
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(20.dp))
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()) {
-            OutlinedTextField(
-                value = selectedOptionText,
-                onValueChange = {},
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .onGloballyPositioned { coordinates ->
-                        // capture the size of the TextField
-                        textFieldSize = coordinates.size.toSize()
-                    }
-                    .clickable { expanded = true },
-                placeholder = { Text("Select Country") },
-                enabled = false, // prevent manual typing
-                colors = TextFieldDefaults.colors(
-                    disabledIndicatorColor = Color.Gray,
-                    disabledContainerColor = Color.White,
-                ),
-                trailingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.ArrowDropDown,
-                        contentDescription = null
-                    )
-                }
-            )
 
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier
-                    .width(with(LocalDensity.current) { textFieldSize.width.toDp() })
-            ) {
-                options.forEach { option ->
-                    DropdownMenuItem(
-                        text = { Text(option) },
-                        onClick = {
-                            selectedOptionText = option
-                            expanded = false
-                        }
-                    )
-                }
-            }
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
         OutlinedTextField(
             value = password,
-            onValueChange = {
-                password = it
-            },
-            placeholder = {
-                Text("*******")
-            },
+            onValueChange = { password = it },
+            label = { Text("Password") },
             modifier = Modifier.fillMaxWidth()
         )
+
         Spacer(modifier = Modifier.height(20.dp))
 
-        Button(onClick = {
-            userViewModel.register(email,password){
-                success,message,userId ->
-                if (success) {
-                    var userModel = UserModel(
-                        userId, email, firstName, lastname,
-                        "Male", "9858488483", selectedOptionText
-                    )
-                    userViewModel.addUserToDatabase(userId,userModel){
-                        success,message->
-                        if (success){
-                            Toast.makeText(context,message,Toast.LENGTH_LONG).show()
-                        }else{
-                            Toast.makeText(context,message,Toast.LENGTH_LONG).show()
-                        }
-                    }
-                }else{
-                    Toast.makeText(context,message,Toast.LENGTH_LONG).show()
-                }
-            }
-        },
-            modifier = Modifier.fillMaxWidth()) {
-            Text("Register")
+        OutlinedTextField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            label = { Text("Confirm Password") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(
+                checked = agreedToTerms,
+                onCheckedChange = { agreedToTerms = it }
+            )
+            Text(text = "I agree to the Terms and Conditions.")
         }
 
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(
+            onClick = {
+                if (name.isBlank() || phoneNumber.isBlank() || email.isBlank()
+                    || password.isBlank() || confirmPassword.isBlank()
+                ) {
+                    Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                    return@Button
+                }
+
+                if (password != confirmPassword) {
+                    Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                    return@Button
+                }
+
+                if (!agreedToTerms) {
+                    Toast.makeText(context, "You must agree to the terms", Toast.LENGTH_SHORT).show()
+                    return@Button
+                }
+
+                userViewModel.register(email, password) { success, message, userId ->
+                    if (success) {
+                        val userModel = UserModel(userId, name, email, password ,)
+                        userViewModel.addUserToDatabase(userId, userModel) { success, msg ->
+                            Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
+                        }
+                    } else {
+                        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("SIGN UP")
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Text(
+            text = "Already have an account? Login",
+            color = Color.Magenta,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .clickable {
+                    context.startActivity(Intent(context, LoginActivity::class.java))
+                    activity?.finish()
+                }
+        )
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun RegPreview() {
-    RegBody(innerPaddingValues = PaddingValues(0.dp))
+    RegBody(innerPadding = PaddingValues(0.dp))
 }

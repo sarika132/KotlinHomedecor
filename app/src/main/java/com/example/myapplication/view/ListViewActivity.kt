@@ -158,11 +158,11 @@ fun ListViewBody(){
                             .width(60.dp)
                     )
                     Text(
-                        text = "Curve ", style = TextStyle(
+                        text = "Curve Printerest Mirror", style = TextStyle(
                             fontWeight = FontWeight.SemiBold, fontSize = 20.sp
                         )
                     )
-                    Text(text = "@ Click to Enter", color = Color.Gray)
+                    Text(text = "Rs.1800", color = Color.Gray)
                 }
 
             }
@@ -194,11 +194,11 @@ fun ListViewBody(){
                             .width(60.dp)
                     )
                     Text(
-                        text = "Character", style = TextStyle(
+                        text = "Italian Carpet", style = TextStyle(
                             fontWeight = FontWeight.SemiBold, fontSize = 20.sp
                         )
                     )
-                    Text(text = "@ Click to Enter", color = Color.Gray)
+                    Text(text = "Rs.4000", color = Color.Gray)
                 }
 
             }
@@ -226,11 +226,11 @@ fun ListViewBody(){
                             .width(60.dp)
                     )
                     Text(
-                        text = "Bank Card", style = TextStyle(
+                        text = "Cotton Bedsheet Set", style = TextStyle(
                             fontWeight = FontWeight.SemiBold, fontSize = 20.sp
                         )
                     )
-                    Text(text = "@ Click to Enter", color = Color.Gray)
+                    Text(text = "Rs.2500", color = Color.Gray)
                 }
 
             }
@@ -262,11 +262,11 @@ fun ListViewBody(){
                             .width(60.dp)
                     )
                     Text(
-                        text = "Password", style = TextStyle(
+                        text = "Modern Table Lamp", style = TextStyle(
                             fontWeight = FontWeight.SemiBold, fontSize = 20.sp
                         )
                     )
-                    Text(text = "@ Click to Enter", color = Color.Gray)
+                    Text(text = "Rs.2765", color = Color.Gray)
                 }
 
             }
@@ -294,45 +294,15 @@ fun ListViewBody(){
                             .width(60.dp)
                     )
                     Text(
-                        text = "Logistics", style = TextStyle(
+                        text = "Toothbrush Holder", style = TextStyle(
                             fontWeight = FontWeight.SemiBold, fontSize = 20.sp
                         )
                     )
-                    Text(text = "@ Click to Enter", color = Color.Gray)
+                    Text(text = "Rs.350", color = Color.Gray)
                 }
             }
         }
 
-        Row (
-            modifier = Modifier
-                .padding(start = 17.dp, top = 25.dp, end = 2.dp, bottom = 2.dp)
-        ) {
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(color = Color.LightGray)
-                    .width(360.dp)
-                    .height(70.dp)
-
-            ) {
-                Row (
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 20.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Settings,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(30.dp)
-                            .width(30.dp)
-                    )
-                    Text(text = " Settings",style = TextStyle(
-                        fontWeight = FontWeight.SemiBold, fontSize = 20.sp))
-                }
-            }
-        }
 
     }
 }
