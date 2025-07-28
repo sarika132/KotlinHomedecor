@@ -32,6 +32,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
 
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+
+
 class ListViewActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,9 +63,8 @@ class ListViewActivity : ComponentActivity() {
 fun ListViewBody(){
     Column(modifier=
         Modifier
-            .padding(innerPadding)
             .fillMaxSize()
-            .fillMaxSize().background(color = Color.Cyan)
+            .fillMaxSize().background(color = Color.White)
     ) {
         Row(
             modifier = Modifier
@@ -58,7 +74,7 @@ fun ListViewBody(){
         )
         {
             Image(
-                painter = painterResource(R.drawable.profile),
+                painter = painterResource(R.drawable.img),
                 contentDescription = null,
                 modifier = Modifier
                     .height(50.dp)
@@ -71,16 +87,16 @@ fun ListViewBody(){
                 .padding(start = 17.dp),
         ) {
             Text(
-                text = "Card", style =
+                text = "Ghar Sanshar", style =
                     TextStyle(
                         fontSize = 40.sp,
-                        fontWeight = FontWeight.Bold, color = Color.White,
+                        fontWeight = FontWeight.Bold, color = Color.Cyan,
                         fontStyle = FontStyle.Normal
                     )
             )
             Text(
                 "Simple and easy to use app", style = TextStyle(
-                    fontWeight = FontWeight.SemiBold, color = Color.White
+                    fontWeight = FontWeight.SemiBold, color = Color.Cyan
                 )
             )
         }
@@ -103,7 +119,7 @@ fun ListViewBody(){
                     verticalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.text),
+                        painter = painterResource(R.drawable.bbb),
                         contentDescription = null,
                         modifier = Modifier
                             .height(60.dp)
@@ -135,7 +151,7 @@ fun ListViewBody(){
                     verticalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.addresh),
+                        painter = painterResource(R.drawable.aaa),
                         contentDescription = null,
                         modifier = Modifier
                             .height(60.dp)
@@ -171,7 +187,7 @@ fun ListViewBody(){
                     verticalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.character),
+                        painter = painterResource(R.drawable.login),
                         contentDescription = null,
                         modifier = Modifier
                             .height(60.dp)
@@ -203,7 +219,7 @@ fun ListViewBody(){
                     verticalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.bankcard),
+                        painter = painterResource(R.drawable.cccc),
                         contentDescription = null,
                         modifier = Modifier
                             .height(60.dp)
@@ -239,7 +255,7 @@ fun ListViewBody(){
                     verticalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.password),
+                        painter = painterResource(R.drawable.dddd),
                         contentDescription = null,
                         modifier = Modifier
                             .height(60.dp)
@@ -271,7 +287,7 @@ fun ListViewBody(){
                     verticalArrangement = Arrangement.Center
                 ) {
                     Image(
-                        painter = painterResource(R.drawable.logistics),
+                        painter = painterResource(R.drawable.imgs),
                         contentDescription = null,
                         modifier = Modifier
                             .height(60.dp)
@@ -294,7 +310,7 @@ fun ListViewBody(){
             Box(
                 modifier = Modifier
                     .clip(RoundedCornerShape(10.dp))
-                    .background(color = Color.White)
+                    .background(color = Color.LightGray)
                     .width(360.dp)
                     .height(70.dp)
 
