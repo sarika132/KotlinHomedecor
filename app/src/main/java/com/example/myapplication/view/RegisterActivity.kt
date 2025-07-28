@@ -10,17 +10,20 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.model.UserModel
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.foundation.background
 import com.example.myapplication.repository.UserRepositoryImp
 import com.example.myapplication.viewmodel.UserViewModel
+import androidx.compose.ui.tooling.preview.Preview
 
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,12 +108,29 @@ fun RegBody(innerPadding: PaddingValues) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Checkbox(
-                checked = agreedToTerms,
-                onCheckedChange = { agreedToTerms = it }
-            )
-            Text(text = "I agree to the Terms and Conditions.")
+        Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color.Green)
+                    .padding(12.dp)
+                    .clip(RoundedCornerShape(8.dp))
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = agreedToTerms,
+                    onCheckedChange = { agreedToTerms = it },
+                    colors = CheckboxDefaults.colors(
+                        checkedColor = Color.White,
+                        uncheckedColor = Color.White,
+                        checkmarkColor = Color.Black
+                    )
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "I agree to the Terms and Conditions.",
+                    color = Color.White
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -136,7 +156,7 @@ fun RegBody(innerPadding: PaddingValues) {
 
                 userViewModel.register(email, password) { success, message, userId ->
                     if (success) {
-                        val userModel = UserModel(userId, name, email, password ,)
+                        val userModel = UserModel(userId, name, email, password)
                         userViewModel.addUserToDatabase(userId, userModel) { success, msg ->
                             Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
                         }
