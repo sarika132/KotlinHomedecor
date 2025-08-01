@@ -56,7 +56,7 @@ fun LoginBody() {
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
-    // Load remembered values once
+    // Load saved email and password if any
     LaunchedEffect(true) {
         email = sharedPreferences.getString("email", "") ?: ""
         password = sharedPreferences.getString("password", "") ?: ""
@@ -75,7 +75,8 @@ fun LoginBody() {
 
             Image(
                 painter = painterResource(id = R.drawable.login),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier.size(150.dp)
             )
 
             Spacer(modifier = Modifier.height(40.dp))
@@ -105,7 +106,11 @@ fun LoginBody() {
                 placeholder = { Text("Enter password") },
                 leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
                 trailingIcon = {
-                    val image = if (passwordVisible) R.drawable.baseline_visibility_24 else R.drawable.baseline_visibility_off_24
+                    val image = if (passwordVisible)
+                        R.drawable.baseline_visibility_24
+                    else
+                        R.drawable.baseline_visibility_off_24
+
                     Icon(
                         painter = painterResource(id = image),
                         contentDescription = null,
@@ -140,7 +145,13 @@ fun LoginBody() {
                     )
                     Text("Remember me")
                 }
-                Text("Forgot Password?")
+                Text(
+                    "Forgot Password?",
+                    color = Color.Blue,
+                    modifier = Modifier.clickable {
+                        Toast.makeText(context, "Forgot Password Clicked", Toast.LENGTH_SHORT).show()
+                    }
+                )
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -154,9 +165,8 @@ fun LoginBody() {
                             editor.apply()
                         }
 
+                        // Launch DashboardActivity on successful login
                         val intent = Intent(context, DashboardActivity::class.java)
-                        intent.putExtra("email", email)
-                        intent.putExtra("password", password)
                         context.startActivity(intent)
                         activity.finish()
 
