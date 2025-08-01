@@ -1,86 +1,51 @@
-package com.example.myapplication.view
+package com.example.myapplication.dashboard
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import com.example.myapplication.model.ProductModel
-import com.example.myapplication.repository.ProductRepositoryImpl
-import com.example.myapplication.viewmodel.ProductViewModel
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.R
+import com.example.myapplication.auth.LoginActivity
+import com.example.myapplication.product.AddProductActivity
+import com.google.firebase.auth.FirebaseAuth
 
-class DashboardActivity : ComponentActivity() {
+class DashboardActivity : AppCompatActivity() {
+
+    private lateinit var btnAddProduct: Button
+    private lateinit var firebaseAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            DashboardBody()
+        setContentView(R.layout.activity_dashboard)
+
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        // Check if user is logged in
+        if (firebaseAuth.currentUser == null) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
+
+        btnAddProduct = findViewById(R.id.btnAddProduct)
+        btnAddProduct.setOnClickListener {
+            startActivity(Intent(this, AddProductActivity::class.java))
         }
     }
-}
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun DashboardBody() {
-    val context = LocalContext.current
-    val viewModel = remember { ProductViewModel(ProductRepositoryImpl()) }
-
-    val decorProducts by viewModel.allProducts.observeAsState(initial = emptyList())
-
-    LaunchedEffect(Unit) {
-        viewModel.getAllProduct()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.dashboard_menu, menu)
+        return true
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("Decor Dashboard") })
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menuLogout) {
+            firebaseAuth.signOut()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return true
         }
-    ) { innerPadding ->
-        LazyColumn(modifier = Modifier.padding(innerPadding)) {
-            item {
-                Text(
-                    text = "Decor Products",
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-
-            items(decorProducts.filterNotNull()) { product: ProductModel ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 15.dp, vertical = 8.dp)
-                ) {
-                    Column(modifier = Modifier.padding(15.dp)) {
-                        Text(product.name)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text("Price: ${product.productPrice}")
-                            IconButton(onClick = {
-                                Toast.makeText(context, "Viewing ${product.name}", Toast.LENGTH_SHORT).show()
-                            }) {
-                                Icon(Icons.Default.ShoppingCart, contentDescription = null)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -14,12 +14,15 @@ class ProductViewModel(val repo: ProductRepository) : ViewModel() {
         repo.uploadImage(context,imageUri,callback)
     }
 
+
+
     fun addProduct(
         model: ProductModel,
         callback: (Boolean, String) -> Unit
     ) {
         repo.addProduct(model, callback)
     }
+
 
     fun updateProduct(
         productId: String,
@@ -35,6 +38,7 @@ class ProductViewModel(val repo: ProductRepository) : ViewModel() {
     ) {
         repo.deleteProduct(productId, callback)
     }
+
 
     private val _products = MutableLiveData<ProductModel?>()
     val products: LiveData<ProductModel?> get() = _products
@@ -61,7 +65,11 @@ class ProductViewModel(val repo: ProductRepository) : ViewModel() {
         }
     }
 
-    fun getAllProduct() {
+
+
+
+
+    fun getAllProducts() {
         repo.getAllProduct  { success, msg, data ->
             if (success) {
                 _allProducts.postValue(data)

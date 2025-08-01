@@ -115,7 +115,7 @@ fun RegBody(innerPadding: PaddingValues) {
             Checkbox(
                 checked = agreedToTerms,
                 onCheckedChange = { agreedToTerms = it },
-                        colors = CheckboxDefaults.colors(checkedColor = Color.Green)
+                colors = CheckboxDefaults.colors(checkedColor = Color.Green)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = "I agree to the Terms and Conditions.")
